@@ -198,7 +198,10 @@ mAP: 68.33%
 
 # Final Results
 
-Below is an example how the trained model performs on our traffic data. I processed all 30000 for the final presentation of the project. Output CSV file (format as discussed in the previous section) can be found in detections folder here.
+I processed all 30000 for the final presentation of the project. Output CSV file (format as discussed in the previous section) can be found in detections folder here.
+
+
+Below is an example how the trained model performs on our traffic data:
 
 
 <img src="assets/final_result.gif" alt="video_test" width="600"/>
