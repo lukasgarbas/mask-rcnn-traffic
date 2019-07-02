@@ -206,13 +206,11 @@ Below is an example how the trained model performs on our traffic data. I proces
 
 ## Comments on the result
 
-  - As the result, I figured out that automating mask annotation did produce pretty good results for our data. It worked for this project since The goal was to detect a center point of the object and in our case (vehicles filmed from above) the center point of the mask and the bounding box didn't differ too much.
+  - Automating mask annotation did produce pretty good results for our data. It worked for this project since The goal was to detect a center point of the object and in our case (vehicles filmed from above) the center point of the mask and the bounding box didn't differ too much.
 
   - However, properly annotated masks are very important for good model performance and I'd recommend to annotate a small set of data with an annotation tool and train the model again. Combining properly (drawing polygons) and automatically (using background subtraction) annotated Images would result in better segmentation accuracy. I'd also recommend investing more time in mask annotation and find better ways to automatically annotate masks and add other steps after background subtraction (f.e. Morphological Image Processing).
 
   - I Noticed that one doesn't need much training data to fine tune already existing class in COCO pre-trained model. I trained the model with 1000 images and the average precision for the two main classes (car, person) Increased from 40 to 90 percent.
-
-  - It was fun working with Mask R-CNN. Since I couldn't find any examples how to train (fine-tune) an existing class in the COCO pre-trained Mask R-CNN model, I had to try a few different ways how to do it. The code I used for it is in traffic.py (here).
 
 
 
