@@ -5,6 +5,7 @@ This project uses the Mask R-CNN algorithm to detect features in traffic videos.
 I used a pre-trained model on the COCO dataset and tried to improve results for the following seven classes: person, bicycle, car, motorcycle, bus, train, truck. I was adding notes on my workflow so that one could follow the steps how to set up, evaluate and train an existing Mask R-CNN Model. My workflow is listed below.
 
 The Mask R-CNN was published March 2017: [Mask R-CNN paper]
+
 The Implementation of Mask R-CNN I used for this project: [Matterport Mask R-CNN]
 
 ---
@@ -23,7 +24,7 @@ The Implementation of Mask R-CNN I used for this project: [Matterport Mask R-CNN
 
 # Running a pre-trained model
 
-Mask R-CNN was trained on [COCO dataset] which includes 80 different classes. For this project I only needed seven of them. You can find the code how to load your pre-trained weights in process_video.py. The result with detected objects will first be stored as a video file. Here are some examples how pre-trained coco weights perform on already mentioned seven classes: 
+Mask R-CNN was trained on [COCO dataset] which includes 80 different classes. For this project I only needed seven of them. You can find the code how to load your pre-trained weights in process_video.py. The result with detected objects will first be stored as a video file. Here are some examples how pre-trained coco weights perform: 
 
 <img src="assets/image_test_mp.jpg" alt="image_test" width="600"/>
 
@@ -85,7 +86,7 @@ Precision shows how the model is able to identify only the relevant objects.
 
 ### Recall
 
-Recall shows how the model is able to find all the relevant cases (all ground truth bounding boxes).
+Recall shows how the model is able to find all relevant cases (all ground truth bounding boxes).
 
 ![equation](http://latex.codecogs.com/gif.latex?Recall%3D%5Cfrac%7BTP%7D%7BTP+FN%7D)
 
@@ -198,7 +199,7 @@ mAP: 68.33%
 
 # Final Results
 
-I processed all 30000 for the final presentation of the project. Output CSV file (format as discussed in the previous section) can be found in detections folder here.
+I processed all 30000 frames for the final presentation of the project. Output CSV file (format as discussed in the previous section) can be found in detections folder (here).
 
 
 Below is an example how the trained model performs on our traffic data:
@@ -209,11 +210,11 @@ Below is an example how the trained model performs on our traffic data:
 
 ## Comments on the result
 
-  - Automating mask annotation did produce pretty good results for our data. It worked for this project since The goal was to detect a center point of the object and in our case (vehicles filmed from above) the center point of the mask and the bounding box didn't differ too much.
+  - Automating mask annotation did produce pretty good results for our data. It worked for this project since the goal was to detect the center point of the object and in our case (vehicles filmed from above) the center point of the mask didn't differ too much from the center of the bounding box.
 
-  - However, properly annotated masks are very important for good model performance and I'd recommend to annotate a small set of data with an annotation tool and train the model again. Combining properly (drawing polygons) and automatically (using background subtraction) annotated Images would result in better segmentation accuracy. I'd also recommend investing more time in mask annotation and find better ways to automatically annotate masks and add other steps after background subtraction (f.e. Morphological Image Processing).
+  - However, properly annotated masks are very important for good model performance and I'd recommend to annotate a small set of data with an annotation tool and train the model again. Combining properly (drawing polygons) and automatically (using background subtraction) annotated images would result in better segmentation accuracy. I'd also recommend investing more time in mask annotation and find better ways to automatically annotate masks and add other steps after background subtraction (f.e. Morphological Image Processing).
 
-  - I Noticed that one doesn't need much training data to fine tune already existing class in COCO pre-trained model. I trained the model with 1000 images and the average precision for the two main classes (car, person) Increased from 40 to 90 percent.
+  - I Noticed that one doesn't need much training data to fine tune already existing class in COCO pre-trained model. I trained the model with 1000 images and the average precision for the two classes (car, person) increased from 40 to 90 percent.
 
 
 
