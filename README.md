@@ -12,17 +12,17 @@ The Implementation of Mask R-CNN I used for this project: [Matterport Mask R-CNN
 
 # Project Workflow
 
-  1. [Running a pre-trained model](#choosing-a-pre-trained-model)
+  1. [Setting up a pre-trained model](#setting-up-a-pre-trained-model)
   2. [First results](#first-results)
   3. [Choosing output format](#choosing-output-format)
   4. [Evaluating pre-trained model](#evaluate-coco-model)
   5. [Data Annotation](#data-annotation)
   6. [Training Mask RCNN model](#Training-mask-rcnn-model)
   7. [Evaluating fine-tuned model](#evaluate-fine-tuned-model)
-  8. [Final result](#final-result)
+  8. [Final results](#final-results)
 
 
-# Running a pre-trained model
+# Setting up a pre-trained model
 
 Mask R-CNN was trained on [COCO dataset] which includes 80 different classes. For this project I only needed seven of them. You can find the code how to load your pre-trained weights in process_video.py. The result with detected objects will first be stored as a video file. Here are some examples how pre-trained coco weights perform: 
 
@@ -49,7 +49,7 @@ In this project I had a specific dataset where objects were recorder from a long
 
   Just like in object detection with bounding boxes one could track objects by finding the center of the rectangle. Following output file looks like this:
     
-  __(frame number, class, left, top, right, bottom, score)__
+  __(frame number, class, left, top, right, bottom, confidence)__
 
   where (left, top) is the topmost-left and (right, bottom) is the bottommost-right point coordinates of the bounding box
   
@@ -57,14 +57,14 @@ In this project I had a specific dataset where objects were recorder from a long
     
   Having an exact mask of the object I calculated the center point which is more exact. Finding the center of binary mask was done using cv2.findContours() and cv2.moments(). Here's the following output file format: 
     
-  __(frame number, class, center_left, center_top, score)__
+  __(frame number, class, center_left, center_top, confidence)__
     
 
 # Evaluating COCO-trained Model
 
 ### Intersection over Union (IoU)
 
-Evaluates the overlap between two bounding boxes. IOU is given by the overlapping area between the predicted bounding box and the ground truth bounding box divided by the area of union between them.
+Evaluates the overlap between two bounding boxes. To measure IOU one needs to divide the overlapping area between the predicted and ground truth bounding boxes by the area of union between them.
 
 <div align="center">
   <img src="assets/iou.jpg" alt="image_test" width="500"/>
