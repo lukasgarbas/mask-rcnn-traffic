@@ -64,7 +64,12 @@ In this project I had a specific dataset where objects were recorder from a long
 
 ### Intersection over Union (IoU)
 
-Evaluates the overlap between two bounding boxes. To measure IOU one needs to divide the overlapping area between the predicted and ground truth bounding boxes by the area of union between them.
+Evaluates the overlap between two bounding boxes. In order to apply IoU we need: 
+
+1. Ground-truth bounding boxes (Annotations)
+2. Predicted bounding boxes from our model
+
+IoU is measured by dividing the ovelapping area by the area of union between them.
 
 <div align="center">
   <img src="assets/iou.jpg" alt="image_test" width="500"/>
