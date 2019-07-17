@@ -38,7 +38,7 @@ After testing Tensorflow Inception V2 Model on my data I ended up using the matt
 
 # First Results
 
-In this project I had a specific dataset where objects were recorder from a long distance and in a different sunlight. In total I had 30000 frames filmed from the same location. Here is the result of running a small (~200 frames) cut from the video:
+In this project I had a specific dataset with objects recorder from a long distance and in a different sunlight. In total I had 30000 frames filmed from the same location. Here is the result of running a small (~200 frames) cut from the video:
 
 <img src="assets/video_test_mp.gif" alt="video_test" width="600"/>
 
