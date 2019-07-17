@@ -34,11 +34,11 @@ For comparison, this Mask R-CNN model with one of Tensorflow models from [Tensor
 
 <img src="assets/image_test_tf.jpg" alt="image_test" width="600"/>
 
-After testing Tensorflow Inception V2 Model on my data I decited to use Model from Mask R-CNN since it was more accurate with detecting different vehicles and people.
+After testing Tensorflow Inception V2 Model on my data I ended up using the matterport Mask R-CNN model since it was more accurate with detecting different vehicles and people in a longer distance.
 
 # First Results
 
-In this project I had a specific dataset where objects were recorder from a long distance and in a different sunlight. In total I had 30000 frames filmed from the same location. Here is the result of running a small (~200 frames) cut from a video:
+In this project I had a specific dataset where objects were recorder from a long distance and in a different sunlight. In total I had 30000 frames filmed from the same location. Here is the result of running a small (~200 frames) cut from the video:
 
 <img src="assets/video_test_mp.gif" alt="video_test" width="600"/>
 
@@ -55,7 +55,9 @@ In this project I had a specific dataset where objects were recorder from a long
   
 ### Tracking with center (centroid) coordinates:
     
-  Having an exact mask of the object I calculated the center point which is more exact. Finding the center of binary mask was done using cv2.findContours() and cv2.moments(). Here's the following output file format: 
+  Having an exact mask of the object I calculated the center point which is more exact. 
+  
+  Finding the center of binary mask was done using __cv2.findContours()__ and __cv2.moments()__. Here's the following output file format: 
     
   __(frame number, class, center_left, center_top, confidence)__
     
