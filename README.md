@@ -1,8 +1,8 @@
 # Mask R-CNN for Traffic Detection
 
-This project uses the Mask R-CNN algorithm to detect features in traffic videos. The goal is to test the Mask R-CNN neural network algorithm and improve object detection and segmentation in traffic by detecting objects filmed from long distance and using wide angle lenses.
+This project uses the Mask R-CNN algorithm to detect features in traffic videos. The goal is to test the Mask R-CNN neural network algorithm and improve object detection and segmentation in traffic by detecting objects filmed from long distances and using wide-angle lenses.
 
-I used a pre-trained model on the COCO dataset and tried to improve results for the following seven classes: person, bicycle, car, motorcycle, bus, train, truck. I was adding notes on my workflow so that one could follow the steps how to set up, evaluate and train an existing Mask R-CNN Model. My workflow is listed below.
+I used a pre-trained model on the COCO dataset and tried to improve results for the following seven classes: person, bicycle, car, motorcycle, bus, train, truck. I was adding notes on my workflow so that one could follow the steps on how to set up, evaluate and train an existing Mask R-CNN Model. My workflow is listed below.
 
 The Mask R-CNN was published March 2017: [Mask R-CNN paper]
 
@@ -24,11 +24,11 @@ The Implementation of Mask R-CNN I used for this project: [Matterport Mask R-CNN
 
 # Setting up a pre-trained model
 
-Mask R-CNN was trained on [COCO dataset] which includes 80 different classes. For this project I only needed seven of them. You can find the code how to load your pre-trained weights in process_video.py. The result with detected objects will first be stored as a video file. Here are some examples how pre-trained coco weights perform: 
+Mask R-CNN was trained on [COCO dataset] which includes 80 different classes. For this project, I only needed seven of them. You can find the code on how to load your pre-trained weights in process_video.py. The result with detected objects will first be stored as a video file. Here are some examples of how pre-trained coco weights perform: 
 
 <img src="assets/image_test_mp.jpg" alt="image_test" width="600"/>
 
-For comparison, this Mask R-CNN model with one of Tensorflow models from [Tensorflow Object Detection API]
+For comparison: Mask R-CNN and one of Tensorflow models from [Tensorflow Object Detection API]
 
 - mask_rcnn_inception_v2_coco (Tensorflow)
 
@@ -38,7 +38,7 @@ After testing Tensorflow Inception V2 Model on my data I ended up using the matt
 
 # First Results
 
-In this project I had a specific dataset with objects recorder from a long distance and in a different sunlight. In total I had 30000 frames filmed from the same location. Here is the result of running a small (~200 frames) cut from the video:
+In this project, I had a specific dataset with objects recorder from a long distance and in different sunlight. In total, I had 30000 frames filmed from the same location. Here is the result of running a small (~200 frames) cut from the video:
 
 <img src="assets/video_test_mp.gif" alt="video_test" width="600"/>
 
@@ -54,8 +54,6 @@ In this project I had a specific dataset with objects recorder from a long dista
   where (left, top) is the topmost-left and (right, bottom) is the bottommost-right point coordinates of the bounding box
   
 ### Tracking with center (centroid) coordinates:
-    
-  Having an exact mask of the object I calculated the center point which is more exact. 
   
   Finding the center of binary mask was done using __cv2.findContours()__ and __cv2.moments()__. Here's the following output file format: 
     
@@ -66,12 +64,12 @@ In this project I had a specific dataset with objects recorder from a long dista
 
 ### Intersection over Union (IoU)
 
-Evaluates the overlap between two bounding boxes. In order to apply IoU we need: 
+Evaluates the overlap between two bounding boxes. To apply IoU we need: 
 
 1. Ground-truth bounding boxes (Annotations)
 2. Predicted bounding boxes from our model
 
-IoU is measured by dividing the ovelapping area by the area of union between them.
+IoU is measured by dividing the overlapping area by the area of union between them.
 
 <div align="center">
   <img src="assets/iou.jpg" alt="image_test" width="500"/>
@@ -117,7 +115,7 @@ Car      |  Person
 :-------------------------:|:-------------------------:
 <img src="assets/eval-coco-car.png" width="500"/> | <img src="assets/eval-coco-person.png" width="500"/>
 
-Here are the the Average Precision (AP) values for all the classes:
+Average Precision (AP) values for all classes:
 
 AP: 0.00% (bicycle)  
 AP: 52.35% (bus)  
@@ -134,7 +132,7 @@ I used Computer Vision Annotation Tool (CVAT) to label 1000 images with bounding
 
 ### Annotating masks
 
-Since there are around 10 objects in each frame, I tried to annotate masks automatically. Mask annotation was done by subtracting the background from original image and removing the area outside bounding boxes.
+Since there are around 10 objects in each frame, I tried to annotate masks automatically. Mask annotation was done by subtracting the background from the original image and removing the area outside bounding boxes.
 
   1. Background subtraction using MOG2 Subtractor
   2. Setting area outside bounding boxes to black
@@ -159,7 +157,7 @@ This way I was able to annotate most of the bounding boxes with masks. However, 
 
 I prepared 1000 images for training and other 3000 frames for testing.
 
-Training and validation data is stored inside __dataset__ folder. Each folder has images, corresponding masks and csv file with bounding boxes. To inspect the data we can try loading masks and images in traffic.py. Code is written in __inspect_data__ notebook. Here's the example of an image file and a mask file loaded and displayed in traffic.py:
+Training and validation data are stored inside __dataset__ folder. Each folder has images, corresponding masks and csv file with bounding boxes. To inspect the data we can try loading masks and images in traffic.py. Code is written in __inspect_data__ notebook. Here's the example of an image file and a mask file loaded and displayed in traffic.py:
 
  <div align="center">
   <img src="assets/inspect_data.png" width="900"/>
@@ -169,16 +167,16 @@ Training and validation data is stored inside __dataset__ folder. Each folder ha
 # Training Mask R-CNN Model
 
 
-Training the model for this specific task is quite different from [Balloon] or [Nucleus] since we're not adding new classes to our model. For fine-tuning of existing classes we have to keep the same number of classes (and ids) in confing file as the pre-trained model. Training is written in traffic.py and can be run using command:
+Training the model for this specific task is quite different from [Balloon] or [Nucleus] since we're not adding new classes to our model. For the fine-tuning of existing classes, we have to keep the same number of classes (and ids) in config file as the pre-trained model. Training is written in traffic.py and can be run using the command:
 
 
 ```
 python3 traffic.py train --dataset=dataset --weights=mask_rcnn_coco.h5 --logs=logs
 ```
 
-I trained the model on google colab until loss value was 0.2. My Settings were steps:200, epochs:40.
+I trained the model on google collab until loss value was 0.2. My Settings were steps:200, epochs:40.
 
-As the result of training, new weights will be saved inside logs folder. My weights file after training: __mask_rcnn_traffic.h5__
+As a result of training, new weights will be saved inside the logs folder. My weights file after training: __mask_rcnn_traffic.h5__
 
 
 # Evaluating fine-tuned Model
@@ -206,10 +204,10 @@ mAP: 68.33%
 
 # Final Results
 
-I processed all 30000 frames for the final presentation of the project. Output CSV file (format as discussed in the previous section) can be found in detections folder (here).
+I processed all 30000 frames for the final presentation of the project. Output CSV file (format as discussed in the previous section) can be found in the detections folder (here).
 
 
-Here is an example how the trained model performs on our traffic data:
+Here is an example of how the trained model performs on our traffic data:
 
 
 <img src="assets/final_result.gif" alt="video_test" width="600"/>
@@ -217,11 +215,13 @@ Here is an example how the trained model performs on our traffic data:
 
 ## Comments on the result
 
-  - Automating mask annotation did produce pretty good results for our data. It worked for this project since the goal was to detect the center point of the object and in our case (vehicles filmed from above) the center point of the mask didn't differ too much from the center of the bounding box.
+  - Automating mask annotation did produce pretty good results for our data. In our case (vehicles filmed from above) the center point of the mask didn't differ too much from the center of the bounding box.
 
   - However, properly annotated masks are very important for good model performance and I'd recommend to annotate a small set of data with an annotation tool and train the model again. Combining properly (drawing polygons) and automatically (using background subtraction) annotated images would result in better segmentation accuracy. I'd also recommend investing more time in mask annotation and find better ways to automatically annotate masks and add other steps after background subtraction (f.e. Morphological Image Processing).
 
-  - I Noticed that one doesn't need much training data to fine tune already existing class in COCO pre-trained model. I trained the model with 1000 images and the average precision for the two classes (car, person) increased from 40 to 90 percent.
+  - I Noticed that one doesn't need much training data to fine-tune already an existing class in COCO pre-trained model. I trained the model with 1000 images and the average precision for the two classes (car, person) increased from 40 to 90 percent.
+I processed all 30000 frames for the final presentation of the project. The output CSV file (format as discussed in the previous section) can be found in the detections folder (here).
+
 
 
 
